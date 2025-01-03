@@ -29,10 +29,6 @@ java {
     }
 }
 
-testing.suites {
-    withType<JvmTestSuite> { useJUnit() }
-}
-
 dependencies {
     val commonFeature = dependencies.project(path)
         .capabilities { requireCapability("${project.group}:${project.name}-common") }

@@ -11,4 +11,6 @@ rootProject.name = "java-lib-with-variants"
 
 include(
     "library",
+    "app-spring5",
+    "app-spring6",
 )
