@@ -1,0 +1,9 @@
+[libraries]
+junit = "junit:junit:4.13.2"
+spring-framework5 = "org.springframework.boot:spring-boot-dependencies:2.7.18"
+spring-framework6 = "org.springframework.boot:spring-boot-dependencies:3.4.1"
+spring-starter-test = { module = "org.springframework.boot:spring-boot-test" }
+spring-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+
+[plugins]
+kotlin-jvm = "org.jetbrains.kotlin.jvm:2.1.0"
