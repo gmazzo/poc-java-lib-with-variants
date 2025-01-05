@@ -11,6 +11,7 @@ group = "org.sample"
 version = "0.1.0"
 
 val common by sourceSets.creating
+val commonTest by sourceSets.creating
 val spring6 by sourceSets.creating
 val spring6Test by testing.suites.creating(JvmTestSuite::class)
 
@@ -22,6 +23,10 @@ java {
         usingSourceSet(common)
         withSourcesJar()
     }
+    registerFeature(commonTest.name) {
+        usingSourceSet(commonTest)
+        disablePublication()
+    }
     registerFeature(spring6.name) {
         usingSourceSet(spring6)
         withSourcesJar()
@@ -29,24 +34,21 @@ java {
 }
 
 dependencies {
-    val commonFeature = project(path)
-        .capabilities { requireCapability("${project.group}:${project.name}-common") }
-
-    val spring6Feature = project(path)
-        .capabilities { requireCapability("${project.group}:${project.name}-spring6") }
+    fun feature(name: String) = project(path)
+        .capabilities { requireCapability("${project.group}:${project.name}-$name") }
 
     "commonApi"(platform(libs.spring.framework5)) // we take Spring 5 as base API
     "commonApi"(libs.spring.starter.web)
-    api(commonFeature)
+    api(feature("common"))
     "spring6Api"(platform(libs.spring.framework6))
-    "spring6Api"(commonFeature)
+    "spring6Api"(feature("common"))
 
-    testImplementation(libs.spring.starter.test)
-    testImplementation(libs.junit)
-
-    "spring6TestImplementation"(spring6Feature)
-    "spring6TestImplementation"(libs.spring.starter.test)
-    "spring6TestImplementation"(libs.junit)
+    "commonTestApi"(feature("common"))
+    "commonTestApi"(libs.spring.starter.test)
+    "commonTestApi"(libs.junit)
+    testImplementation(feature("common-test"))
+    "spring6TestImplementation"(feature("spring6"))
+    "spring6TestImplementation"(feature("common-test"))
 }
 
 publishing.publications.register<MavenPublication>("mavenJava") {
