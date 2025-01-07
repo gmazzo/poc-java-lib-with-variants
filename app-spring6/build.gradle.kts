@@ -6,8 +6,8 @@ plugins {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 dependencies {
-    implementation(projects.library) {
-        capabilities { requireCapability("${project.group}:library-spring6") }
+    implementation(projects.library) dep@{
+        capabilities { requireCapability("${this@dep.group}:${this@dep.name}-spring6") }
     }
 
     testImplementation(libs.spring.starter.test)
