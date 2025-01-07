@@ -37,8 +37,12 @@ dependencies {
     fun feature(name: String) = project(path)
         .capabilities { requireCapability("${project.group}:${project.name}-$name") }
 
-    "commonApi"(platform(libs.spring.framework5)) // we take Spring 5 as base API
+    // we take Spring 5 as base API
+    "commonCompileOnly"(platform(libs.spring.framework5))
+    "commonTestImplementation"(platform(libs.spring.framework5))
+
     "commonApi"(libs.spring.starter.web)
+    api(platform(libs.spring.framework5))
     api(feature("common"))
     "spring6Api"(platform(libs.spring.framework6))
     "spring6Api"(feature("common"))
